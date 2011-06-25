@@ -1,0 +1,20 @@
+Benchmark
+=========
+
+A developer friendly profiling class. Generates plain-text formatted output indicating passed time in the nearest human unit (microseconds, seconds and minutes).
+
+Example
+=======
+
+<?php
+	include 'Benchmark.php';
+
+	$benchmark = new Benchmark();
+	$benchmark->start('SECTION');
+	// do stuff
+	$benchmark->stop('SECTION');
+
+	$benchmark->display();
+
+Output:
+SECTION = 100 ms (or 1.23 s)
