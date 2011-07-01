@@ -3,7 +3,13 @@
 		private $sections = array();
 		
 		function __construct() {
-			$this->start('total');
+			$this->sections['total'] = array();
+			$this->sections['total'][] = array(
+				'time_start' => microtime(true),
+				'time_stop'  => null,
+				'memory_start' => memory_get_usage(),
+				'memory_stop' => null
+			);
 		}
 
 		/**
@@ -33,6 +39,8 @@
 		}
 
 		function start($section) {
+			if( $section == 'total' )
+				throw new Exception('a total measurement is already being made.');
 			$this->calculated = false;
 			if( !isset($this->sections[$section]) ) {
 				$this->sections[$section] = array();
