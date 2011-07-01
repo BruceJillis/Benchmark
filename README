@@ -1,7 +1,8 @@
 Benchmark
 =========
 
-A developer friendly profiling class. Generates plain-text formatted output indicating passed time in the nearest human unit (microseconds, seconds and minutes).
+A developer friendly profiling class. Generates a simple html table as output indicating passed time and memory usage in human readable units. It supports multiple executions of profile blocks and calculates
+median values and average absolute deviations over the entire series of measurements.
 
 Example
 =======
@@ -10,11 +11,21 @@ Example
 	include 'Benchmark.php';
 
 	$benchmark = new Benchmark();
-	$benchmark->start('SECTION');
+	$benchmark->start('section1');
 	// do stuff
-	$benchmark->stop('SECTION');
-
+	$benchmark->stop('section1');
+	$benchmark->start('section2');
+	// do some stuff
+	$benchmark->stop('section2');
+	$benchmark->start('section2');
+	// do some stuff again
+	$benchmark->stop('section2');
 	$benchmark->display();
 
-Output:
-SECTION = 100 ms (or 1.23 s)
+Example Output:
+section  #     Time                                Memory
+            |  total mean  median   deviation   |  total mean  median   deviation
+section2 2  |  0 ms  0 ms  0 ms     +/- 0 ms    |  512 B 256 B 256 B    +/- 0 B
+section1 1  |  0 ms  0 ms  0 ms     +/- 0 ms    |  264 B 264 B 264 B    +/- 0 B
+---------------------------------------------------------------------------------
+total       |  1 ms                             |   2 kB

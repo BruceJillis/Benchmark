@@ -22,8 +22,12 @@
 
 	$bm = new Benchmark();
 
-	$bm->start('SIEVE');
-	eratosthenes(19000);
-	$bm->stop('SIEVE');
+	for($j = 0; $j < rand(1, 10); $j++) {
+		for($i = 0; $i < rand(1, 150); $i++) {
+			$bm->start('sieve' . $j);
+			eratosthenes(1000 *  $j);
+			$bm->stop('sieve' . $j);
+		}
+	}
 
 	$bm->display();
