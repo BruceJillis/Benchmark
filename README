@@ -1,8 +1,30 @@
 Benchmark
 =========
 
-A developer friendly profiling class. Generates a simple html table as output indicating passed time and memory usage in human readable units. It supports multiple executions of profile blocks and calculates
-median values and average absolute deviations over the entire series of measurements.
+A developer friendly profiling class. Generates a simple html table as output indicating passed time and memory usage 
+in human readable units. It supports multiple executions of profile blocks and calculates median values and average 
+absolute median deviations over the entire series of measurements to indicate the spread of measurements.
+
+Why does Benchmark show the median instead of the mean? "Calculation of medians is a popular technique in summary statistics 
+and summarizing statistical data, since it is simple to understand and easy to calculate, while also giving a measure that is 
+more robust in the presence of outlier values than is the mean".
+
+Why average absolute median averages? "In statistics, the median absolute deviation (MAD) is a robust measure of the 
+variability of a univariate sample of quantitative data". "Univariate refers to an expression, equation, function or 
+polynomial of only one variable". Such as time, or memory. "Numerical data (or quantitative data) is data measured or 
+identified on a numerical scale". Such as measurements of time and memory. So we should be better of using the median.
+
+Why do you also show the mean? Because large differences between the median and the mean, means that the measurement data
+has outliers.
+
+Caveats, this class is pretty simple. It does not try to exclude time spent "in itself". It does however automatically keep
+score of the total time from construction until the call to ->display().
+
+sources, extra info:
+- Median absolute deviation: http://en.wikipedia.org/wiki/Median_absolute_deviation
+- Absolute deviation: http://en.wikipedia.org/wiki/Absolute_deviation
+- Univariate: http://en.wikipedia.org/wiki/Univariate
+- Numerical data: http://en.wikipedia.org/wiki/Quantitative_data
 
 Example
 =======
@@ -23,9 +45,9 @@ Example
 	$benchmark->display();
 
 Example Output:
-section  #     Time                                Memory
+section  #  |  Time                             |  Memory
             |  total mean  median   deviation   |  total mean  median   deviation
 section2 2  |  0 ms  0 ms  0 ms     +/- 0 ms    |  512 B 256 B 256 B    +/- 0 B
 section1 1  |  0 ms  0 ms  0 ms     +/- 0 ms    |  264 B 264 B 264 B    +/- 0 B
 ---------------------------------------------------------------------------------
-total       |  1 ms                             |   2 kB
+total       |  1 ms                             |  2 kB
